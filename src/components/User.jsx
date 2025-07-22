@@ -1,31 +1,35 @@
 import {useContext} from 'react'
-import {UserContext} from '../context/UserContext';
-
+import {UserContext} from '../context/UserContext'
 
 export const User = () => {
 
-	const {
-		isLoggedIn,
-		setIsLoggedIn,
-		userName,
-		setUserName
-	} = useContext(UserContext)
+  const {user, logIn, logOut, changeCurrency} = useContext(UserContext)
 
-	return (
-		<div style={{border: '5px solid orange', margin: '1em', padding: '1em'}}>
-			<h3>{isLoggedIn ? userName : 'Anonymous user / not logged in'}</h3>
+  return (
+    <div style={{border: '5px solid orange', margin: '1em', padding: '1em'}}>
+      <h3>User</h3>
 
-			<button onClick={() => {
-				setIsLoggedIn(true)
-				setUserName('Karel Vomacka')
-			}}>Log In</button>
+      {user.isLoggedIn && (
+        <>
+          <h4>{user.name}</h4>
+          <p>
+            Currency: {user.currency}
 
-			<button onClick={() => {
-				setIsLoggedIn(false)
-				setUserName('')
-			}}>Log Out</button>
-		</div>
-	);
+            <button onClick={() => { changeCurrency('Kč')}}>Kč</button>
+            <button onClick={() => { changeCurrency('EUR')}}>EUR</button>
+            <button onClick={() => { changeCurrency('USD')}}>USD</button>
+
+          </p>
+        </>
+      )}
+
+      {
+        user.isLoggedIn
+        ? <button onClick={logOut}>Odhlásit</button>
+        : <button onClick={logIn}>Přihlásit</button>
+      }
+    </div>
+  );
 }
 
 export default User;

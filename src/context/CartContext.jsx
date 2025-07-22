@@ -1,17 +1,17 @@
 import {useState, createContext} from 'react'
 
-export const CartContext = createContext()
+export const CartContext = createContext(null)
 
 export function CartProvider({children}) {
   const [cart, setCart] = useState([])
 
-  const addToCart = (product) => {
-    setCart(prevState => [
-      ...prevState,
+  const addToCart = (id, name, price) => {
+    setCart(prev => [
+      ...prev,
       {
-        id: product.id,
-        name: product.name,
-        price: product.price,
+        id,
+        name,
+        price,
         amount: 1,
       }
     ])
